@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import ProductCard from './ProductCard.jsx';
 import SectionCard from './SectionCard.jsx';
 import UserCard from './UserCard.jsx';
@@ -9,6 +10,20 @@ function PropsPracticeSection({
   selectedProductId,
   selectedUserId,
 }) {
+  const handleSelectProduct = useCallback(
+    (productId) => {
+      onSelectProduct(productId);
+    },
+    [onSelectProduct],
+  );
+
+  const handleSelectUser = useCallback(
+    (userId) => {
+      onSelectUser(userId);
+    },
+    [onSelectUser],
+  );
+
   return (
     <SectionCard>
       <h2 className="text-2xl font-semibold">Components, Props, and State</h2>
@@ -27,7 +42,7 @@ function PropsPracticeSection({
               <UserCard
                 isActive={selectedUserId === user.id}
                 key={user.id}
-                onSelect={onSelectUser}
+                onSelect={handleSelectUser}
                 user={user}
               />
             ))}
@@ -43,7 +58,7 @@ function PropsPracticeSection({
               <ProductCard
                 isSelected={selectedProductId === product.id}
                 key={product.id}
-                onSelect={onSelectProduct}
+                onSelect={handleSelectProduct}
                 product={product}
               />
             ))}

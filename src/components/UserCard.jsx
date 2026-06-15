@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import Button from './Button.jsx';
 
 function UserCard({ isActive, onSelect, user }) {
@@ -30,4 +31,4 @@ function UserCard({ isActive, onSelect, user }) {
   );
 }
 
-export default UserCard;
+export default memo(UserCard);

@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import Button from './Button.jsx';
 
 function ProductCard({ isSelected, onSelect, product }) {
@@ -31,4 +32,4 @@ function ProductCard({ isSelected, onSelect, product }) {
   );
 }
 
-export default ProductCard;
+export default memo(ProductCard);

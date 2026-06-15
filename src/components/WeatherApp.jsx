@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { getCurrentWeather, searchCity, weatherCodeLabels } from '../api/weather.js';
 import Button from './Button.jsx';
 import SectionCard from './SectionCard.jsx';
@@ -50,7 +50,26 @@ function WeatherApp() {
     };
   }, [city]);
 
-  const handleSubmit = (event) => {
+  const weatherSummary = useMemo(() => {
+    if (!weather) {
+      return null;
+    }
+
+    return {
+      condition:
+        weatherCodeLabels[weather.current.weather_code] ?? 'Weather update',
+      feelsLike: `${Math.round(weather.current.apparent_temperature)}${weather.units.apparent_temperature}`,
+      humidity: `${weather.current.relative_humidity_2m}${weather.units.relative_humidity_2m}`,
+      temperature: `${Math.round(weather.current.temperature_2m)}${weather.units.temperature_2m}`,
+      wind: `${weather.current.wind_speed_10m} ${weather.units.wind_speed_10m}`,
+    };
+  }, [weather]);
+
+  const handleCityInputChange = useCallback((event) => {
+    setCityInput(event.target.value);
+  }, []);
+
+  const handleSubmit = useCallback((event) => {
     event.preventDefault();
 
     const nextCity = cityInput.trim();
@@ -61,7 +80,7 @@ function WeatherApp() {
     }
 
     setCity(nextCity);
-  };
+  }, [cityInput]);
 
   return (
     <SectionCard>
@@ -74,7 +93,7 @@ function WeatherApp() {
       <form className="mt-6 flex flex-col gap-3 sm:flex-row" onSubmit={handleSubmit}>
         <input
           className="min-w-0 flex-1 rounded-md border border-slate-300 bg-white px-4 py-2 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:placeholder:text-slate-400 dark:focus:ring-blue-950"
-          onChange={(event) => setCityInput(event.target.value)}
+          onChange={handleCityInputChange}
           placeholder="Search city"
           type="text"
           value={cityInput}
@@ -93,7 +112,7 @@ function WeatherApp() {
           <p className="font-medium text-red-600 dark:text-red-400">{error}</p>
         )}
 
-        {weather && !isLoading && !error && (
+        {weather && weatherSummary && !isLoading && !error && (
           <div>
             <div className="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
               <div>
@@ -101,12 +120,11 @@ function WeatherApp() {
                   {weather.city}, {weather.country}
                 </h3>
                 <p className="text-slate-600 dark:text-slate-300">
-                  {weatherCodeLabels[weather.current.weather_code] ?? 'Weather update'}
+                  {weatherSummary.condition}
                 </p>
               </div>
               <p className="text-4xl font-bold">
-                {Math.round(weather.current.temperature_2m)}
-                {weather.units.temperature_2m}
+                {weatherSummary.temperature}
               </p>
             </div>
 
@@ -116,8 +134,7 @@ function WeatherApp() {
                   Feels like
                 </dt>
                 <dd className="mt-1 font-semibold">
-                  {Math.round(weather.current.apparent_temperature)}
-                  {weather.units.apparent_temperature}
+                  {weatherSummary.feelsLike}
                 </dd>
               </div>
               <div className="rounded-md bg-white p-3 dark:bg-slate-900">
@@ -125,17 +142,14 @@ function WeatherApp() {
                   Humidity
                 </dt>
                 <dd className="mt-1 font-semibold">
-                  {weather.current.relative_humidity_2m}
-                  {weather.units.relative_humidity_2m}
+                  {weatherSummary.humidity}
                 </dd>
               </div>
               <div className="rounded-md bg-white p-3 dark:bg-slate-900">
                 <dt className="text-sm text-slate-500 dark:text-slate-400">
                   Wind
                 </dt>
-                <dd className="mt-1 font-semibold">
-                  {weather.current.wind_speed_10m} {weather.units.wind_speed_10m}
-                </dd>
+                <dd className="mt-1 font-semibold">{weatherSummary.wind}</dd>
               </div>
             </dl>
           </div>

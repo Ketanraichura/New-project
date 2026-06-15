@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import Counter from './components/Counter.jsx';
 import PageHeader from './components/PageHeader.jsx';
 import PropsPracticeSection from './components/PropsPracticeSection.jsx';
@@ -11,9 +11,9 @@ function App() {
   const [selectedUserId, setSelectedUserId] = useState(users[0].id);
   const [selectedProductId, setSelectedProductId] = useState(products[0].id);
 
-  const toggleTheme = () => {
-    setIsDark(!isDark);
-  };
+  const toggleTheme = useCallback(() => {
+    setIsDark((currentTheme) => !currentTheme);
+  }, []);
 
   return (
     <div className={isDark ? 'dark' : ''}>
