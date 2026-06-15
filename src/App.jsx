@@ -1,3 +1,5 @@
+import Counter from './components/Counter.jsx';
+
 function App() {
   return (
     <main className="min-h-screen bg-slate-100 px-4 py-10 text-slate-900">
@@ -10,6 +12,10 @@ function App() {
           A small practice board for getting comfortable with components,
           state, inputs, and simple UI updates again.
         </p>
+
+        <div className="mt-8 grid gap-6">
+          <Counter />
+        </div>
       </section>
     </main>
   );
