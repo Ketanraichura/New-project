@@ -1,4 +1,5 @@
 import Counter from './components/Counter.jsx';
+import TodoList from './components/TodoList.jsx';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
 
         <div className="mt-8 grid gap-6">
           <Counter />
+          <TodoList />
         </div>
       </section>
     </main>
