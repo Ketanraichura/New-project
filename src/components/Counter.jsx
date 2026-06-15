@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import Button from './Button.jsx';
+import SectionCard from './SectionCard.jsx';
 
 function Counter() {
   const [count, setCount] = useState(0);
@@ -16,38 +18,26 @@ function Counter() {
   };
 
   return (
-    <section className="rounded-lg bg-white p-6 shadow-sm ring-1 ring-slate-200 dark:bg-slate-900 dark:ring-slate-800">
+    <SectionCard>
       <h2 className="text-2xl font-semibold">Counter</h2>
       <p className="mt-2 text-slate-600 dark:text-slate-300">
         A quick warmup for state updates with button clicks.
       </p>
 
       <div className="mt-6 flex items-center gap-4">
-        <button
-          className="rounded-md bg-slate-200 px-4 py-2 font-medium text-slate-800 hover:bg-slate-300 dark:bg-slate-800 dark:text-slate-100 dark:hover:bg-slate-700"
-          onClick={decreaseCount}
-          type="button"
-        >
+        <Button onClick={decreaseCount} variant="secondary">
           -1
-        </button>
+        </Button>
         <p className="min-w-16 text-center text-4xl font-bold">{count}</p>
-        <button
-          className="rounded-md bg-blue-600 px-4 py-2 font-medium text-white hover:bg-blue-700"
-          onClick={increaseCount}
-          type="button"
-        >
+        <Button onClick={increaseCount}> 
           +1
-        </button>
+        </Button>
       </div>
 
-      <button
-        className="mt-4 text-sm font-medium text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
-        onClick={resetCount}
-        type="button"
-      >
+      <Button className="mt-4 px-0 text-sm" onClick={resetCount} variant="ghost">
         Reset counter
-      </button>
-    </section>
+      </Button>
+    </SectionCard>
   );
 }
 

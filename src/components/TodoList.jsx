@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import Button from './Button.jsx';
+import SectionCard from './SectionCard.jsx';
 
 const startingTodos = [
   {
@@ -72,7 +74,7 @@ function TodoList() {
   };
 
   return (
-    <section className="rounded-lg bg-white p-6 shadow-sm ring-1 ring-slate-200 dark:bg-slate-900 dark:ring-slate-800">
+    <SectionCard>
       <h2 className="text-2xl font-semibold">Todo List</h2>
       <p className="mt-2 text-slate-600 dark:text-slate-300">
         Add, update, complete, and remove little practice tasks.
@@ -86,12 +88,9 @@ function TodoList() {
           type="text"
           value={todoText}
         />
-        <button
-          className="rounded-md bg-blue-600 px-5 py-2 font-medium text-white hover:bg-blue-700"
-          type="submit"
-        >
+        <Button className="px-5" type="submit">
           Add todo
-        </button>
+        </Button>
       </form>
 
       <ul className="mt-5 space-y-3">
@@ -108,13 +107,13 @@ function TodoList() {
                   type="text"
                   value={editingText}
                 />
-                <button
-                  className="rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-700 dark:bg-slate-100 dark:text-slate-900 dark:hover:bg-slate-200"
+                <Button
+                  className="text-sm"
                   onClick={() => saveTodo(todo.id)}
-                  type="button"
+                  variant="dark"
                 >
                   Save
-                </button>
+                </Button>
               </div>
             ) : (
               <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
@@ -136,27 +135,27 @@ function TodoList() {
                   </span>
                 </label>
                 <div className="flex gap-2">
-                  <button
-                    className="rounded-md px-3 py-2 text-sm font-medium text-blue-600 hover:bg-blue-50 dark:text-blue-400 dark:hover:bg-blue-950"
+                  <Button
+                    className="px-3 text-sm"
                     onClick={() => startEditing(todo)}
-                    type="button"
+                    variant="ghost"
                   >
                     Edit
-                  </button>
-                  <button
-                    className="rounded-md px-3 py-2 text-sm font-medium text-red-600 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-950"
+                  </Button>
+                  <Button
+                    className="px-3 text-sm"
                     onClick={() => deleteTodo(todo.id)}
-                    type="button"
+                    variant="danger"
                   >
                     Delete
-                  </button>
+                  </Button>
                 </div>
               </div>
             )}
           </li>
         ))}
       </ul>
-    </section>
+    </SectionCard>
   );
 }
 
